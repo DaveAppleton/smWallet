@@ -11,7 +11,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spacemeshos/ed25519"
 	"github.com/spacemeshos/go-spacemesh/common/types"
 	"github.com/spacemeshos/go-spacemesh/common/util"
@@ -302,7 +301,7 @@ func TestSignTransaction(t *testing.T) {
 	chkTErr(t, err)
 	var tx types.Transaction
 	// random target address
-	addr, err := hexutil.Decode("0x865330189761187daa2243a1533b0412b8e14613")
+	addr, err := util.Decode("0x865330189761187daa2243a1533b0412b8e14613")
 	chkTErr(t, err)
 	tx.Recipient = types.BytesToAddress(addr)
 	tx.GasLimit = 100
@@ -371,7 +370,7 @@ func send(data []byte) {
 
 func TestBytes(t *testing.T) {
 	str := "0xbeaad6d44a6c84f6ccf14ea271e5039a834054ee3efd569d5c1721288dca6082"
-	by, _ := hexutil.Decode(str)
+	by, _ := util.Decode(str)
 	fmt.Print("[")
 	comma := ""
 	for _, b := range by {
@@ -397,7 +396,7 @@ func TestSendTenTransactions(t *testing.T) {
 	addrx := []string{"0xc57b32284d7d51d710ec52c033909d6ef4dd34bb"} //"0x865330189761187daa2243a1533b0412b8e14613"} //  "0x4a6d9d5cb2ed462c06dd88233686d7d69086bdc6", "0xfbccb6737f56416ddc982448c90e78e8d40b149b", "0x679c9f490e8f8c118f63229ab445cc3bb0b456c8"}
 	for _, addry := range addrx {
 		tx.Amount = 100000000000
-		addr, err := hexutil.Decode(addry)
+		addr, err := util.Decode(addry)
 		chkTErr(t, err)
 		tx.Recipient = types.BytesToAddress(addr)
 		for j := 0; j < 10; j++ {
