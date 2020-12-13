@@ -36,6 +36,15 @@ func (w *Wallet) GetAddress(accountNumber int) (types.Address, error) {
 
 // GetPublicKey retrieves an address from a wallet if unlocked and it has been generated
 func (w *Wallet) GetPublicKey(accountNumber int) (ed25519.PublicKey, error) {
+	private, err := w.GetPrivateKey(accountNumber)
+	if err != nil {
+		return []byte{}, err
+	}
+	return PublicKey(private), nil
+}
+
+// GetPrivateKey retrieve the private key
+func (w *Wallet) GetPrivateKey(accountNumber int) (ed25519.PrivateKey, error) {
 	if !w.unlocked {
 		return []byte{}, errors.New(ErrorWalletNotUnlocked)
 	}
@@ -47,7 +56,7 @@ func (w *Wallet) GetPublicKey(accountNumber int) (ed25519.PublicKey, error) {
 	if err != nil {
 		return []byte{}, err
 	}
-	return PublicKey(private), nil
+	return private, nil
 }
 
 // GetAccountDisplayName retrieves an account name from a wallet (if unlocked and account exists)

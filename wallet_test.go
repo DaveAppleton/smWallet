@@ -14,6 +14,7 @@ import (
 	"github.com/spacemeshos/ed25519"
 	"github.com/spacemeshos/go-spacemesh/common/types"
 	"github.com/spacemeshos/go-spacemesh/common/util"
+	"github.com/spf13/viper"
 
 	"github.com/tyler-smith/go-bip39"
 	"golang.org/x/crypto/pbkdf2"
@@ -25,11 +26,19 @@ import (
 // address : 0x7fa75881ca0050028b32f424f860e3a73d4bf168
 //           0xf6103aadbba77d2324fc4fad66eaa971bb5b8402
 
+func initViper(t *testing.T) {
+	viper.SetConfigFile("./.private.json")
+	if err := viper.ReadInConfig(); err != nil {
+		t.Fatal("Could not read config file")
+	}
+}
+
 func TestReadWallet(t *testing.T) {
-	keystore := "./my_wallet_0_2020-04-25T19-40-50.942Z.json"
+	initViper(t)
+	keystore := viper.GetString("w1")
 	smData, err := LoadWallet(keystore)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatal(err, keystore)
 	}
 	t.Log(smData.Meta.DisplayName)
 	t.Log(smData.Meta.Created)
@@ -63,6 +72,9 @@ func testUnlock(t *testing.T, keystore string, password string) {
 	t.Log("mnemonic", mnenonic)
 	t.Log(numberOfAccounts, "entries")
 	for accountNo := 0; accountNo < numberOfAccounts; accountNo++ {
+		display, err := smData.GetAccountDisplayName(accountNo)
+		chkTErr(t, err)
+		t.Log("name", display)
 		pubKey, err := smData.GetPublicKey(accountNo)
 		chkTErr(t, err)
 		t.Log("pubkey", pubKey)
@@ -75,9 +87,10 @@ func testUnlock(t *testing.T, keystore string, password string) {
 }
 
 func TestUnlock1(t *testing.T) {
+	initViper(t)
 	// created in 0.1.13
-	wallet := "/Users/daveappleton/Library/Application Support/Spacemesh/my_wallet_0_2020-06-16T21-16-28.295Z.json"
-	testUnlock(t, wallet, "<<password>>")
+	wallet := viper.GetString("w1")
+	testUnlock(t, wallet, viper.GetString("p1"))
 }
 
 func TestUnlock2(t *testing.T) {
