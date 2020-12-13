@@ -8,6 +8,7 @@ require (
 	github.com/onsi/gomega v1.10.1 // indirect
 	github.com/spacemeshos/ed25519 v0.0.0-20200604074309-d72da3b5f487
 	github.com/spacemeshos/go-spacemesh v0.1.12
+	github.com/spf13/viper v1.4.0
 	github.com/tyler-smith/go-bip39 v1.0.2
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 )
