@@ -203,3 +203,7 @@ func (w *Wallet) SignedTransaction(t *types.Transaction) ([]byte, error) {
 	buf = append(buf, ed25519.Sign2(key, buf)...)
 	return buf, nil
 }
+
+func (w *Wallet) WalletPath() string {
+	return w.keystore
+}
