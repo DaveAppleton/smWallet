@@ -83,6 +83,7 @@ type Wallet struct {
 	unlocked bool
 	Meta     walletMetadata      `json:"meta"`
 	Crypto   walletEncryptedData `json:"crypto"`
+	Contacts []contact           `json:"contacts"`
 }
 
 // NewWallet returns a brand shiny new wallet with random seed and mnemonic phrase
