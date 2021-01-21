@@ -66,7 +66,7 @@ type walletMetadata struct {
 	Created     string `json:"created"`
 	NetID       int    `json:"netId"`
 	Meta        struct {
-		Salt string
+		Salt string `json:"salt"`
 	} `json:"meta"`
 }
 
