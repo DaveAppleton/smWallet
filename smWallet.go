@@ -57,22 +57,22 @@ type secretStuff struct {
 }
 
 type contact struct {
-	Nickname string
-	Address  string
+	Nickname string `json:"nickname"`
+	Address  string `json:"address"`
 }
 
 type walletMetadata struct {
-	DisplayName string
-	Created     string
-	NetID       int
+	DisplayName string `json:"displayName"`
+	Created     string `json:"created"`
+	NetID       int    `json:"netId"`
 	Meta        struct {
 		Salt string
-	}
+	} `json:"meta"`
 }
 
 type walletEncryptedData struct {
-	Cipher       string
-	CipherText   string
+	Cipher       string `json:"cipher"`
+	CipherText   string `json:"cipherText"`
 	confidential secretStuff
 }
 
@@ -81,8 +81,8 @@ type Wallet struct {
 	keystore string
 	password string
 	unlocked bool
-	Meta     walletMetadata
-	Crypto   walletEncryptedData
+	Meta     walletMetadata      `json:"meta"`
+	Crypto   walletEncryptedData `json:"crypto"`
 }
 
 // NewWallet returns a brand shiny new wallet with random seed and mnemonic phrase
