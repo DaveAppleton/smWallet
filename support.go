@@ -44,7 +44,7 @@ func (w *Wallet) reCrypt() error {
 		return err
 	}
 	w.Crypto.CipherText = util.Bytes2Hex(ciphertext)
-	return nil
+	return w.SaveWallet()
 }
 
 func nowTimeString() string {
