@@ -28,11 +28,11 @@ const (
 )
 
 type account struct {
-	DisplayName string
-	Created     string
-	Path        string
-	PublicKey   string
-	SecretKey   string
+	DisplayName string `json:"displayName"`
+	Created     string `json:"created"`
+	Path        string `json:"path"`
+	PublicKey   string `json:"publicKey"`
+	SecretKey   string `json:"secretKey"`
 }
 
 func (a *account) Address() types.Address {
@@ -51,8 +51,9 @@ func (w *Wallet) CurrentAccount() (*account, error) {
 }
 
 type secretStuff struct {
-	Mnemonic      string
-	Accounts      []account
+	Mnemonic      string    `json:"mnemonic"`
+	Accounts      []account `json:"accounts"`
+	Contacts      []contact `json:"contacts"`
 	accountNumber int
 }
 
@@ -83,7 +84,6 @@ type Wallet struct {
 	unlocked bool
 	Meta     walletMetadata      `json:"meta"`
 	Crypto   walletEncryptedData `json:"crypto"`
-	Contacts []contact           `json:"contacts"`
 }
 
 // NewWallet returns a brand shiny new wallet with random seed and mnemonic phrase

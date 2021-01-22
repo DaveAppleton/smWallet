@@ -3,6 +3,7 @@ package smWallet
 import (
 	"bytes"
 	"crypto/sha512"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -56,6 +57,10 @@ func chkTErr(t *testing.T, err error) {
 	}
 }
 
+func TestSmApp(t *testing.T) {
+	testUnlock(t, "smApp2020.json", "<<password>>")
+}
+
 func testUnlock(t *testing.T, keystore string, password string) {
 	t.Log("opening :", keystore)
 	//
@@ -83,6 +88,20 @@ func testUnlock(t *testing.T, keystore string, password string) {
 		t.Log("address", address.Hex())
 		t.Log("pk", smData.Crypto.confidential.Accounts[accountNo].SecretKey)
 	}
+	t.Log(len(smData.Crypto.confidential.Contacts), " contacts")
+	for n, ctc := range smData.Crypto.confidential.Contacts {
+		t.Log(n, ctc)
+	}
+
+	ciphertext, err := hex.DecodeString(smData.Crypto.CipherText)
+	if err != nil {
+		return
+	}
+	plaintextBytes, err := smData.twoWayAES(ciphertext)
+	if err != nil {
+		return
+	}
+	t.Log("cipherText :", string(plaintextBytes))
 	t.Fail()
 }
 
