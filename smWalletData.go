@@ -81,3 +81,13 @@ func (w *Wallet) SetCurrent(accountNumber int) error {
 	w.Crypto.confidential.accountNumber = accountNumber
 	return nil
 }
+
+func (w *Wallet) AddContact(nickname string, address types.Address) error {
+	if !w.unlocked {
+		return errors.New(ErrorWalletNotUnlocked)
+	}
+	// TO DO : Validate nickname and address
+	w.Crypto.confidential.Contacts = append(w.Crypto.confidential.Contacts, contact{Nickname: nickname, Address: address.Hex()})
+	err := w.reCrypt()
+	return err
+}
