@@ -108,6 +108,7 @@ func NewWallet(walletName, password string) (w *Wallet, err error) {
 	if err != nil {
 		return nil, err
 	}
+	wx.Crypto.confidential.Contacts = []contact{}
 	wx.reCrypt()
 	return wx, nil
 }
