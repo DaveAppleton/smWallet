@@ -47,7 +47,7 @@ func (w *Wallet) reCrypt() error {
 	if len(w.keystore) > 0 {
 		return w.SaveWallet()
 	}
-	return w.SaveWalletAs("my_wallet")
+	return nil
 }
 
 func nowTimeString() string {
